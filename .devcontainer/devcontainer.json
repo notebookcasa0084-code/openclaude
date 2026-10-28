@@ -1,0 +1,26 @@
+{
+  "name": "OpenClaude & Ollama Environment",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    },
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "portsAttributes": {
+    "11434": {
+      "label": "Ollama API",
+      "onAutoForward": "notify"
+    }
+  },
+  "forwardPorts": [11434],
+  "postCreateCommand": "bash .github/scripts/start-openclaude.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "GitHub.copilot",
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  }
+}
