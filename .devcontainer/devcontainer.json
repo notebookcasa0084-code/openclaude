@@ -5,7 +5,10 @@
     "ghcr.io/devcontainers/features/node:1": {
       "version": "lts"
     },
-    "ghcr.io/devcontainers/features/git:1": {}
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "latest"
+    }
   },
   "portsAttributes": {
     "11434": {
@@ -14,12 +17,13 @@
     }
   },
   "forwardPorts": [11434],
-  "postCreateCommand": "bash .github/scripts/start-openclaude.sh",
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y zstd git-lfs && git lfs install && pip install ollama duckduckgo_search --break-system-packages && bash .github/scripts/start-openclaude.sh",
   "customizations": {
     "vscode": {
       "extensions": [
         "GitHub.copilot",
-        "dbaeumer.vscode-eslint"
+        "dbaeumer.vscode-eslint",
+        "ms-python.python"
       ]
     }
   }
