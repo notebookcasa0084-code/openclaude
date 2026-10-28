@@ -3,13 +3,20 @@ set -e
 
 echo "[OpenClaude] Iniciando ambiente..."
 
-# 1. Verificar se o Ollama está instalado
+# 1. Carregar variáveis de otimização de memória do Ollama
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -f "$SCRIPT_DIR/ollama-env.sh" ]; then
+    echo "[Ollama] Carregando configurações de memória e performance..."
+    source "$SCRIPT_DIR/ollama-env.sh"
+fi
+
+# 2. Verificar se o Ollama está instalado
 if ! command -v ollama &> /dev/null; then
     echo "[Erro] Ollama não encontrado. Instalando..."
     curl -fsSL https://ollama.com/install.sh | sh
 fi
 
-# 2. Verificar se o servidor do Ollama já está rodando
+# 3. Verificar se o servidor do Ollama já está rodando
 if ! pgrep -x "ollama" > /dev/null; then
     echo "[Ollama] Iniciando o servidor em segundo plano..."
     mkdir -p ~/.openclaude/logs
