@@ -5,7 +5,7 @@ run:
 	python main.py
 
 test:
-	pytest --cov=openclaude --cov-report=term-missing
+	python -m pytest --cov=openclaude --cov-report=term-missing
 
 lint:
 	ruff check .
