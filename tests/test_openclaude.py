@@ -1,4 +1,5 @@
-from openclaude import __version__, DEFAULT_MODEL
+from openclaude import DEFAULT_MODEL, __version__
+
 
 def test_package_metadata():
     """Garante que a versão do pacote e o modelo padrão estão definidos corretamente."""
@@ -7,6 +8,6 @@ def test_package_metadata():
 
 def test_import_modules():
     """Garante que os submódulos principais podem ser importados sem erros."""
-    from openclaude import search_web, ask_llm
+    from openclaude import ask_llm, search_web
     assert callable(search_web)
     assert callable(ask_llm)
