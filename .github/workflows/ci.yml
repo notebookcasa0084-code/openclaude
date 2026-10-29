@@ -24,6 +24,10 @@ jobs:
           python -m pip install --upgrade pip
           make install
 
+      - name: Executar Lint com Ruff
+        run: |
+          make lint
+
       - name: Executar testes
         run: |
           make test
