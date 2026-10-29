@@ -1,26 +1,20 @@
+import os
 import ollama
-from typing import Generator
+from dotenv import load_dotenv
 
-DEFAULT_MODEL = "qwen2.5-coder:1.5b"
+# Carrega as variáveis do arquivo .env
+load_dotenv()
 
-def generate_stream(prompt: str, context: str = "", model: str = DEFAULT_MODEL) -> Generator[str, None, None]:
-    """Envia o prompt e o contexto para o Ollama e gera tokens via streaming."""
-    if context:
-        full_prompt = f"""Responda à pergunta do usuário utilizando as informações contextuais obtidas da web abaixo.
+DEFAULT_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5-coder:1.5b")
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 
-Contexto da Web:
-{context}
-
-Pergunta do Usuário: {prompt}
-"""
-    else:
-        full_prompt = prompt
-
-    stream = ollama.chat(
-        model=model,
-        messages=[{'role': 'user', 'content': full_prompt}],
-        stream=True
-    )
-
-    for chunk in stream:
-        yield chunk['message']['content']
+def ask_llm(prompt: str, model: str = DEFAULT_MODEL) -> str:
+    """Envia um prompt para o modelo Ollama configurado e retorna a resposta."""
+    try:
+        response = ollama.chat(
+            model=model,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        return response['message']['content']
+    except Exception as e:
+        return f"Erro ao comunicar com o Ollama: {e}"
